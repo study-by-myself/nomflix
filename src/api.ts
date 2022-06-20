@@ -20,6 +20,27 @@ export interface IGetMoviesResult {
   total_results: number;
 }
 
+export interface IGetTVResult {
+  page: number;
+  results: ITV[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface ITV {
+  id: number;
+  first_air_date: string;
+  genre_ids: number[];
+  name: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  vote_average: number;
+  vote_count: number;
+  original_language: string;
+}
+
 export interface ISearch {
   id: number;
   name: string;
@@ -42,8 +63,21 @@ export function getMovies() {
   );
 }
 
+export function getMovieDetail(movie_id: number | null) {
+  console.log(movie_id);
+  return fetch(`${BASE_PATH}/movie/${movie_id}?api_key=${API_KEY}`).then(
+    (response) => response.json()
+  );
+}
+
 export function getMoviesBySearch(keyword: string | undefined) {
   return fetch(
-    `${BASE_PATH}/search/keyword?api_key=${API_KEY}&query=${keyword}`
+    `${BASE_PATH}/search/movie?api_key=${API_KEY}&query=${keyword}`
   ).then((response) => response.json());
+}
+
+export function getTvs() {
+  return fetch(`${BASE_PATH}/tv/on_the_air?api_key=${API_KEY}`).then(
+    (response) => response.json()
+  );
 }

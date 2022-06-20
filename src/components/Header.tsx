@@ -118,6 +118,7 @@ function Header() {
   const inputAnimation = useAnimation();
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
+
   const toggleSearch = () => {
     if (searchOpen) {
       inputAnimation.start({
