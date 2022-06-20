@@ -33,6 +33,12 @@ function Home() {
     setIsOpen((prev) => !prev);
   };
 
+  const movieSlides = [
+    { title: "Now Playing Movies >", data: nowPlayingMovies },
+    { title: "Top Rated Movies >", data: topRatedMovies },
+    { title: "Upcoming Movies >", data: upcomingMovies },
+  ];
+
   return (
     <Wrapper>
       {nowPlayingLoading ||
@@ -47,31 +53,15 @@ function Home() {
             <Title>{latestMovie?.title}</Title>
             <Overview>{latestMovie?.overview}</Overview>
           </Banner>
-          <Sliders
-            title="Now Playing Movies >"
-            data={nowPlayingMovies}
-            openModal={() => setIsOpen(true)}
-            setMovieId={setMovieId}
-          />
-          <Sliders
-            title="Top Rated Movies >"
-            data={topRatedMovies}
-            openModal={() => setIsOpen(true)}
-            setMovieId={setMovieId}
-          />
-          <Sliders
-            title="Upcoming Movies >"
-            data={upcomingMovies}
-            openModal={() => setIsOpen(true)}
-            setMovieId={setMovieId}
-          />
-          {isOpen && (
-            <MovieModal
-              data={nowPlayingMovies?.results}
-              closeModal={closeModal}
-              movieId={movieId}
+          {movieSlides.map((movie) => (
+            <Sliders
+              title={movie.title}
+              data={movie.data}
+              openModal={() => setIsOpen(true)}
+              setMovieId={setMovieId}
             />
-          )}
+          ))}
+          {isOpen && <MovieModal closeModal={closeModal} movieId={movieId} />}
         </>
       )}
     </Wrapper>

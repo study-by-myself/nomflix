@@ -55,17 +55,14 @@ const BigError = styled.h1`
 
 interface IMovieModalProps {
   movieId: number | null;
-  data?: IMovie[];
   closeModal: () => void;
 }
 
-const MovieModal = ({ movieId, data, closeModal }: IMovieModalProps) => {
+const MovieModal = ({ movieId, closeModal }: IMovieModalProps) => {
   const { data: clickedMovie } = useQuery<IMovie>(["movies", movieId], () =>
     getMovieDetail(movieId)
   );
 
-  console.log(data);
-  console.log(clickedMovie);
   const { scrollY } = useViewportScroll();
   const onOverlayClick = () => closeModal();
 

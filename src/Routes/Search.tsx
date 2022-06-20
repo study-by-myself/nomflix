@@ -44,7 +44,6 @@ function Search() {
         {isOpen && (
           <MovieModal
             movieId={movieId}
-            data={[movieData!]}
             closeModal={() => setIsOpen((prev) => !prev)}
           />
         )}

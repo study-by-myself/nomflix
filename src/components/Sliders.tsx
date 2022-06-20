@@ -10,7 +10,7 @@ const offset = 6;
 
 const Slider = styled.div`
   position: relative;
-  top: -500px;
+  top: -400px;
   margin-top: 300px;
 `;
 
