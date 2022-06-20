@@ -14,18 +14,11 @@ export interface IResult {
   backdrop_path: string | null;
   title: string;
 }
-export interface IGetMoviesResult {
+export interface IResults {
   dates: {
     maximum: string;
     minimum: string;
   };
-  page: number;
-  results: IResult[];
-  total_pages: number;
-  total_results: number;
-}
-
-export interface IGetTVResult {
   page: number;
   results: IResult[];
   total_pages: number;
@@ -106,5 +99,11 @@ export function getPopularTV() {
 export function getTopRatedTV() {
   return fetch(`${BASE_PATH}/tv/top_rated?api_key=${API_KEY}`).then(
     (response) => response.json()
+  );
+}
+
+export function getTVDetail(tv_id: number | null) {
+  return fetch(`${BASE_PATH}/tv/${tv_id}?api_key=${API_KEY}`).then((response) =>
+    response.json()
   );
 }

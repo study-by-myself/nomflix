@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { AnimatePresence } from "framer-motion";
-import { IGetMoviesResult } from "../api";
+import { IResults } from "../api";
 import ResultBox from "./ResultBox";
 import { Row } from "./common/styled/Row";
 import StyledTitle from "./common/styled/StyledTitle";
@@ -29,7 +29,7 @@ const rowVariants = {
 interface ISliderProps {
   title: string;
   toggleLeaving?: () => void;
-  data?: IGetMoviesResult;
+  data?: IResults;
   openModal: () => void;
   setMovieId: (movieId: number) => void;
 }
@@ -41,7 +41,7 @@ const Sliders = ({ title, data, openModal, setMovieId }: ISliderProps) => {
   const toggleLeaving = () => setLeaving((prev) => !prev);
 
   const increaseIndex = (
-    data: IGetMoviesResult,
+    data: IResults,
     setIndex: Dispatch<SetStateAction<number>>
   ) => {
     if (data) {
@@ -77,7 +77,7 @@ const Sliders = ({ title, data, openModal, setMovieId }: ISliderProps) => {
             .map((movie) => (
               <ResultBox
                 key={movie.id}
-                movie={movie}
+                data={movie}
                 onBoxClicked={onBoxClicked}
               />
             ))}

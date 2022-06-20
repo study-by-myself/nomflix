@@ -4,24 +4,24 @@ import { IResult } from "../api";
 import { makeImagePath } from "../utils";
 
 interface IResultBoxProps {
-  movie: IResult;
+  data: IResult;
   onBoxClicked: (id: number) => void;
 }
 
-const ResultBox = ({ movie, onBoxClicked }: IResultBoxProps) => {
+const ResultBox = ({ data, onBoxClicked }: IResultBoxProps) => {
   return (
     <Box
-      layoutId={movie.id + ""}
-      key={movie.id}
+      layoutId={data.id + ""}
+      key={data.id}
       whileHover="hover"
       initial="normal"
       variants={boxVariants}
-      onClick={() => onBoxClicked(movie.id)}
+      onClick={() => onBoxClicked(data.id)}
       transition={{ type: "tween" }}
-      $bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
+      $bgPhoto={makeImagePath(data.backdrop_path, "w500")}
     >
       <Info variants={infoVariants}>
-        <h4>{movie.title}</h4>
+        <h4>{data.title || "No title"}</h4>
       </Info>
     </Box>
   );

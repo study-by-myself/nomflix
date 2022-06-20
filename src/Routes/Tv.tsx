@@ -1,29 +1,53 @@
+import { useState } from "react";
 import { useQuery } from "react-query";
 import {
   getAiringToday,
   getLatestTV,
   getPopularTV,
   getTopRatedTV,
-  IGetTVResult,
+  IResults,
   IResult,
+  getTVDetail,
 } from "../api";
 import Banner from "../components/Banner";
 import Loader from "../components/common/styled/Loader";
 import { Wrapper } from "../components/common/styled/Wrapper";
+import ClickedModal from "../components/ClickedModal";
+import Sliders from "../components/Sliders";
 
 function Tv() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [tvId, setTvId] = useState<number | null>(null);
+
   const { data: latestTV, isLoading: latestLoading } = useQuery<IResult>(
     ["TVs", "latest"],
     getLatestTV
   );
   const { data: airingTodayTV, isLoading: airingTodayLoading } =
-    useQuery<IGetTVResult>(["TVs", "airingToday"], getAiringToday);
-  const { data: popularTV, isLoading: popularLoading } = useQuery<IGetTVResult>(
+    useQuery<IResults>(["TVs", "airingToday"], getAiringToday);
+  const { data: popularTV, isLoading: popularLoading } = useQuery<IResults>(
     ["TVs", "popular"],
     getPopularTV
   );
-  const { data: topRatedTV, isLoading: topRatedLoading } =
-    useQuery<IGetTVResult>(["TVs", "topRated"], getTopRatedTV);
+  const { data: topRatedTV, isLoading: topRatedLoading } = useQuery<IResults>(
+    ["TVs", "topRated"],
+    getTopRatedTV
+  );
+
+  const { data: clickedTV, isLoading: clickedTVLoading } = useQuery<IResult>(
+    ["TVs", tvId],
+    () => getTVDetail(tvId)
+  );
+
+  const TVSlide = [
+    { title: "Airing Today >", data: airingTodayTV },
+    { title: "Popular TV shows >", data: popularTV },
+    { title: "Top Rated TV shows >", data: topRatedTV },
+  ];
+
+  const closeModal = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   return (
     <Wrapper>
@@ -34,10 +58,21 @@ function Tv() {
         <Loader> Loading . . . </Loader>
       ) : (
         <ul>
-          <Banner data={latestTV}></Banner>
-          {/* {TvData?.results.map((data) => (
-        <li key={data.id}>{data.name}</li>
-      ))} */}
+          <Banner title="TV show" data={latestTV}></Banner>
+          {TVSlide.map((tv) => (
+            <Sliders
+              title={tv.title}
+              data={tv.data}
+              openModal={() => setIsOpen(true)}
+              setMovieId={setTvId}
+            />
+          ))}
+          {isOpen &&
+            (clickedTVLoading ? (
+              <Loader>Loading . . . </Loader>
+            ) : (
+              <ClickedModal closeModal={closeModal} clickedItem={clickedTV!} />
+            ))}
         </ul>
       )}
     </Wrapper>

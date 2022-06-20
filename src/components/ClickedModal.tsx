@@ -43,7 +43,7 @@ const BigTitle = styled.h3`
 const BigOverview = styled.p`
   padding: 20px;
   position: relative;
-  top: -80px;
+  top: -50px;
   color: ${(props) => props.theme.white.lighter};
 `;
 
@@ -54,21 +54,17 @@ const BigError = styled.h1`
 `;
 
 interface IResultModalProps {
-  movieId: number | null;
+  clickedItem: IResult;
   closeModal: () => void;
 }
 
-const MovieModal = ({ movieId, closeModal }: IResultModalProps) => {
-  const { data: clickedMovie } = useQuery<IResult>(["movies", movieId], () =>
-    getMovieDetail(movieId)
-  );
-
+const ClickedModal = ({ clickedItem, closeModal }: IResultModalProps) => {
   const { scrollY } = useViewportScroll();
   const onOverlayClick = () => closeModal();
 
   return (
     <AnimatePresence>
-      {clickedMovie ? (
+      {clickedItem ? (
         <>
           <Overlay
             onClick={onOverlayClick}
@@ -77,20 +73,22 @@ const MovieModal = ({ movieId, closeModal }: IResultModalProps) => {
           />
           <BigMovie
             style={{ top: scrollY.get() + 100 }}
-            layoutId={clickedMovie.id.toString()}
+            layoutId={clickedItem.id.toString()}
           >
-            {clickedMovie ? (
+            {clickedItem ? (
               <>
                 <BigCover
                   style={{
                     backgroundImage: `linear-gradient(to top, black, transparent), url(${makeImagePath(
-                      clickedMovie.backdrop_path,
+                      clickedItem.backdrop_path,
                       "w500"
                     )})`,
                   }}
                 />
-                <BigTitle>{clickedMovie.title}</BigTitle>
-                <BigOverview>{clickedMovie.overview}</BigOverview>
+                <BigTitle>{clickedItem.title || "No Title"}</BigTitle>
+                <BigOverview>
+                  {clickedItem.overview || "There is No Overview"}
+                </BigOverview>
               </>
             ) : (
               <BigError>Opps! There is no data . . .</BigError>
@@ -102,4 +100,4 @@ const MovieModal = ({ movieId, closeModal }: IResultModalProps) => {
   );
 };
 
-export default MovieModal;
+export default ClickedModal;

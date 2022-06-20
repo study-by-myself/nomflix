@@ -4,15 +4,16 @@ import {
   getMovies,
   getTopRatedMovies,
   getUpcomingMovies,
-  IGetMoviesResult,
+  IResults,
   IResult,
+  getMovieDetail,
 } from "../api";
 import { useState } from "react";
 import Sliders from "../components/Sliders";
-import MovieModal from "../components/MovieModal";
 import Banner from "../components/Banner";
 import Loader from "../components/common/styled/Loader";
 import { Wrapper } from "../components/common/styled/Wrapper";
+import ClickedModal from "../components/ClickedModal";
 
 function Home() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,13 +22,16 @@ function Home() {
     useQuery<IResult>(["movies", "latestMovie"], getLatestMovies);
 
   const { data: nowPlayingMovies, isLoading: nowPlayingLoading } =
-    useQuery<IGetMoviesResult>(["movies", "nowPlaying"], getMovies);
+    useQuery<IResults>(["movies", "nowPlaying"], getMovies);
 
   const { data: topRatedMovies, isLoading: topRatedMoviesLoading } =
-    useQuery<IGetMoviesResult>(["movies", "topRated"], getTopRatedMovies);
+    useQuery<IResults>(["movies", "topRated"], getTopRatedMovies);
 
   const { data: upcomingMovies, isLoading: upcomingMoviesLoading } =
-    useQuery<IGetMoviesResult>(["movies", "upcomingMovies"], getUpcomingMovies);
+    useQuery<IResults>(["movies", "upcomingMovies"], getUpcomingMovies);
+
+  const { data: clickedMovie, isLoading: clickedMovieLoading } =
+    useQuery<IResult>(["movies", movieId], () => getMovieDetail(movieId));
 
   const closeModal = () => {
     setIsOpen((prev) => !prev);
@@ -48,7 +52,7 @@ function Home() {
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Banner data={latestMovie!} />
+          <Banner title="Movie" data={latestMovie!} />
           {movieSlides.map((movie) => (
             <Sliders
               title={movie.title}
@@ -57,7 +61,15 @@ function Home() {
               setMovieId={setMovieId}
             />
           ))}
-          {isOpen && <MovieModal closeModal={closeModal} movieId={movieId} />}
+          {isOpen &&
+            (clickedMovieLoading ? (
+              <Loader> Loading . . . </Loader>
+            ) : (
+              <ClickedModal
+                closeModal={closeModal}
+                clickedItem={clickedMovie!}
+              />
+            ))}
         </>
       )}
     </Wrapper>

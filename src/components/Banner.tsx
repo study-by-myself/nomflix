@@ -4,13 +4,14 @@ import { makeImagePath } from "../utils";
 import StyledTitle from "./common/styled/StyledTitle";
 
 interface IBannerProps {
+  title: string;
   data?: IResult;
 }
 
-const Banner = ({ data }: IBannerProps) => {
+const Banner = ({ title, data }: IBannerProps) => {
   return (
     <BannerWrapper $bgPhoto={makeImagePath(data?.backdrop_path || "")}>
-      <StyledTitle>Latest Movie</StyledTitle>
+      <StyledTitle>Latest {title}</StyledTitle>
       <Title>{data?.title}</Title>
       <Overview>{data?.overview}</Overview>
     </BannerWrapper>
