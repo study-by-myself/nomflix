@@ -21,7 +21,7 @@ const ResultBox = ({ data, onBoxClicked }: IResultBoxProps) => {
       $bgPhoto={makeImagePath(data.backdrop_path, "w500")}
     >
       <Info variants={infoVariants}>
-        <h4>{data.title || "No title"}</h4>
+        <h4>{data.title || data.name || "No title"}</h4>
       </Info>
     </Box>
   );

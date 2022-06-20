@@ -54,26 +54,33 @@ const BigError = styled.h1`
 `;
 
 interface IResultModalProps {
-  clickedItem: IResult;
+  clickedItem?: IResult;
   closeModal: () => void;
+  movieId?: number | null;
 }
 
-const ClickedModal = ({ clickedItem, closeModal }: IResultModalProps) => {
+const ClickedModal = ({
+  clickedItem,
+  closeModal,
+  movieId,
+}: IResultModalProps) => {
   const { scrollY } = useViewportScroll();
-  const onOverlayClick = () => closeModal();
+
+  console.log(clickedItem?.id.toString());
+  console.log(clickedItem?.title);
 
   return (
     <AnimatePresence>
       {clickedItem ? (
         <>
           <Overlay
-            onClick={onOverlayClick}
+            onClick={closeModal}
             exit={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           />
           <BigMovie
             style={{ top: scrollY.get() + 100 }}
-            layoutId={clickedItem.id.toString()}
+            layoutId={movieId?.toString() || clickedItem.id.toString()}
           >
             {clickedItem ? (
               <>
@@ -85,7 +92,9 @@ const ClickedModal = ({ clickedItem, closeModal }: IResultModalProps) => {
                     )})`,
                   }}
                 />
-                <BigTitle>{clickedItem.title || "No Title"}</BigTitle>
+                <BigTitle>
+                  {clickedItem.title || clickedItem.name || "No Title"}
+                </BigTitle>
                 <BigOverview>
                   {clickedItem.overview || "There is No Overview"}
                 </BigOverview>

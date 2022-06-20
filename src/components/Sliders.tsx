@@ -10,8 +10,8 @@ const offset = 6;
 
 const Slider = styled.div`
   position: relative;
-  top: -400px;
-  margin-top: 300px;
+  /* top: -300px; */
+  margin-top: -20px;
 `;
 
 const rowVariants = {
@@ -56,6 +56,7 @@ const Sliders = ({ title, data, openModal, setMovieId }: ISliderProps) => {
   const onBoxClicked = (movieId: number) => {
     openModal();
     setMovieId(movieId);
+    console.log(movieId);
   };
   return (
     <Slider>

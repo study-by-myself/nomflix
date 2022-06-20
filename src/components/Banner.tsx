@@ -19,7 +19,7 @@ const Banner = ({ title, data }: IBannerProps) => {
 };
 
 const BannerWrapper = styled.div<{ $bgPhoto: string }>`
-  height: 100vh;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,12 +30,12 @@ const BannerWrapper = styled.div<{ $bgPhoto: string }>`
 `;
 
 const Title = styled.h2`
-  font-size: 68px;
+  font-size: 50px;
   margin-bottom: 20px; ;
 `;
 
 const Overview = styled.p`
-  font-size: 30px;
+  font-size: 20px;
   width: 50%;
 `;
 

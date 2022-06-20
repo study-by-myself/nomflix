@@ -13,6 +13,7 @@ export interface IResult {
   original_language: string;
   backdrop_path: string | null;
   title: string;
+  name: string;
 }
 export interface IResults {
   dates: {
@@ -41,6 +42,7 @@ export interface IGetSearchResult {
   total_results: number;
 }
 
+/* movies */
 export function getMovies() {
   return fetch(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}`).then(
     (response) => response.json()
@@ -72,12 +74,7 @@ export function getMovieDetail(movie_id: number | null) {
   );
 }
 
-export function getMoviesBySearch(keyword: string | undefined) {
-  return fetch(
-    `${BASE_PATH}/search/movie?api_key=${API_KEY}&query=${keyword}`
-  ).then((response) => response.json());
-}
-
+/* TV */
 export function getAiringToday() {
   return fetch(`${BASE_PATH}/tv/airing_today?api_key=${API_KEY}`).then(
     (response) => response.json()
@@ -106,4 +103,17 @@ export function getTVDetail(tv_id: number | null) {
   return fetch(`${BASE_PATH}/tv/${tv_id}?api_key=${API_KEY}`).then((response) =>
     response.json()
   );
+}
+
+/* search */
+export function getMoviesBySearch(keyword: string | undefined) {
+  return fetch(
+    `${BASE_PATH}/search/movie?api_key=${API_KEY}&query=${keyword}`
+  ).then((response) => response.json());
+}
+
+export function getTVBySearch(keyword: string | undefined) {
+  return fetch(
+    `${BASE_PATH}/search/tv?api_key=${API_KEY}&query=${keyword}`
+  ).then((response) => response.json());
 }

@@ -36,7 +36,8 @@ function Tv() {
 
   const { data: clickedTV, isLoading: clickedTVLoading } = useQuery<IResult>(
     ["TVs", tvId],
-    () => getTVDetail(tvId)
+    () => getTVDetail(tvId),
+    { enabled: !!tvId }
   );
 
   const TVSlide = [
@@ -57,7 +58,7 @@ function Tv() {
       topRatedLoading ? (
         <Loader> Loading . . . </Loader>
       ) : (
-        <ul>
+        <>
           <Banner title="TV show" data={latestTV}></Banner>
           {TVSlide.map((tv) => (
             <Sliders
@@ -69,11 +70,11 @@ function Tv() {
           ))}
           {isOpen &&
             (clickedTVLoading ? (
-              <Loader>Loading . . . </Loader>
+              <Loader> Loading . . . </Loader>
             ) : (
               <ClickedModal closeModal={closeModal} clickedItem={clickedTV!} />
             ))}
-        </ul>
+        </>
       )}
     </Wrapper>
   );
