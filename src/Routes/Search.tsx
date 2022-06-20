@@ -59,18 +59,4 @@ const Wrapper = styled.div`
   margin: 20px;
 `;
 
-const StyledRow = styled.div`
-  width: 200px;
-  height: 200px;
-  padding: 90px 0;
-  background-color: ${(props) => props.theme.black.lighter};
-  border-radius: 15px;
-  text-align: center;
-  font-size: 22px;
-  cursor: pointer;
-  &:hover {
-    background-color: ${(props) => props.theme.black.darker};
-  }
-`;
-
 export default Search;

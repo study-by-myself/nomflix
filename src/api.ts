@@ -63,6 +63,24 @@ export function getMovies() {
   );
 }
 
+export function getLatestMovies() {
+  return fetch(`${BASE_PATH}/movie/latest?api_key=${API_KEY}`).then(
+    (response) => response.json()
+  );
+}
+
+export function getTopRatedMovies() {
+  return fetch(`${BASE_PATH}/movie/top_rated?api_key=${API_KEY}`).then(
+    (response) => response.json()
+  );
+}
+
+export function getUpcomingMovies() {
+  return fetch(`${BASE_PATH}/movie/upcoming?api_key=${API_KEY}`).then(
+    (response) => response.json()
+  );
+}
+
 export function getMovieDetail(movie_id: number | null) {
   console.log(movie_id);
   return fetch(`${BASE_PATH}/movie/${movie_id}?api_key=${API_KEY}`).then(

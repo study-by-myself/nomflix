@@ -1,61 +1,73 @@
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getMovies, IGetMoviesResult } from "../api";
+import {
+  getLatestMovies,
+  getMovies,
+  getTopRatedMovies,
+  getUpcomingMovies,
+  IGetMoviesResult,
+  IMovie,
+} from "../api";
 import { makeImagePath } from "../utils";
 import { useState } from "react";
 import Sliders from "../components/Sliders";
 import MovieModal from "../components/MovieModal";
-
-const offset = 6;
+import StyledTitle from "../components/common/styled/StyledTitle";
 
 function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [movieId, setMovieId] = useState<number | null>(null);
-  const [index, setIndex] = useState(0);
-  const [leaving, setLeaving] = useState(false);
-  const { data, isLoading } = useQuery<IGetMoviesResult>(
-    ["movies", "nowPlaying"],
-    getMovies
-  );
-  console.log(isOpen);
+  const { data: latestMovie, isLoading: latestMoviesLoading } =
+    useQuery<IMovie>(["movies", "latestMovie"], getLatestMovies);
+
+  const { data: nowPlayingMovies, isLoading: nowPlayingLoading } =
+    useQuery<IGetMoviesResult>(["movies", "nowPlaying"], getMovies);
+
+  const { data: topRatedMovies, isLoading: topRatedMoviesLoading } =
+    useQuery<IGetMoviesResult>(["movies", "topRated"], getTopRatedMovies);
+
+  const { data: upcomingMovies, isLoading: upcomingMoviesLoading } =
+    useQuery<IGetMoviesResult>(["movies", "upcomingMovies"], getUpcomingMovies);
 
   const closeModal = () => {
     setIsOpen((prev) => !prev);
   };
-  const incraseIndex = () => {
-    if (data) {
-      if (leaving) return;
-      toggleLeaving();
-      const totalMovies = data.results.length - 1;
-      const maxIndex = Math.floor(totalMovies / offset) - 1;
-      setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
-    }
-  };
-  const toggleLeaving = () => setLeaving((prev) => !prev);
 
   return (
     <Wrapper>
-      {isLoading ? (
+      {nowPlayingLoading ||
+      latestMoviesLoading ||
+      topRatedMoviesLoading ||
+      upcomingMoviesLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Banner
-            onClick={incraseIndex}
-            $bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}
-          >
-            <Title>{data?.results[0].title}</Title>
-            <Overview>{data?.results[0].overview}</Overview>
+          <Banner $bgPhoto={makeImagePath(latestMovie?.backdrop_path || "")}>
+            <StyledTitle>Latest Movie</StyledTitle>
+            <Title>{latestMovie?.title}</Title>
+            <Overview>{latestMovie?.overview}</Overview>
           </Banner>
           <Sliders
-            index={index}
-            toggleLeaving={toggleLeaving}
-            data={data}
+            title="Now Playing Movies >"
+            data={nowPlayingMovies}
+            openModal={() => setIsOpen(true)}
+            setMovieId={setMovieId}
+          />
+          <Sliders
+            title="Top Rated Movies >"
+            data={topRatedMovies}
+            openModal={() => setIsOpen(true)}
+            setMovieId={setMovieId}
+          />
+          <Sliders
+            title="Upcoming Movies >"
+            data={upcomingMovies}
             openModal={() => setIsOpen(true)}
             setMovieId={setMovieId}
           />
           {isOpen && (
             <MovieModal
-              data={data?.results}
+              data={nowPlayingMovies?.results}
               closeModal={closeModal}
               movieId={movieId}
             />
