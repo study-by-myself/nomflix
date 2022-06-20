@@ -53,23 +53,25 @@ function Home() {
       ) : (
         <>
           <Banner title="Movie" data={latestMovie!} />
-          {movieSlides.map((movie) => (
-            <Sliders
-              title={movie.title}
-              data={movie.data}
-              openModal={() => setIsOpen(true)}
-              setMovieId={setMovieId}
-            />
-          ))}
-          {isOpen &&
-            (clickedMovieLoading ? (
-              <Loader> Loading . . . </Loader>
-            ) : (
-              <ClickedModal
-                closeModal={closeModal}
-                clickedItem={clickedMovie!}
+          <Wrapper>
+            {movieSlides.map((movie) => (
+              <Sliders
+                title={movie.title}
+                data={movie.data}
+                openModal={() => setIsOpen(true)}
+                setMovieId={setMovieId}
               />
             ))}
+            {isOpen &&
+              (clickedMovieLoading ? (
+                <Loader> Loading . . . </Loader>
+              ) : (
+                <ClickedModal
+                  closeModal={closeModal}
+                  clickedItem={clickedMovie!}
+                />
+              ))}
+          </Wrapper>
         </>
       )}
     </Wrapper>

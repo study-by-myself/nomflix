@@ -5,6 +5,7 @@ import ResultBox from "./ResultBox";
 import { Row } from "./common/styled/Row";
 import StyledTitle from "./common/styled/StyledTitle";
 import { Dispatch, SetStateAction, useState } from "react";
+import { Wrapper } from "./common/styled/Wrapper";
 
 const offset = 6;
 
@@ -60,30 +61,32 @@ const Sliders = ({ title, data, openModal, setMovieId }: ISliderProps) => {
   };
   return (
     <Slider>
-      <StyledTitle onClick={() => increaseIndex(data!, setIndex)}>
-        {title}
-      </StyledTitle>
-      <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
-        <Row
-          variants={rowVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          transition={{ type: "tween", duration: 1 }}
-          key={index}
-        >
-          {data?.results
-            .slice(1)
-            .slice(offset * index, offset * index + offset)
-            .map((movie) => (
-              <ResultBox
-                key={movie.id}
-                data={movie}
-                onBoxClicked={onBoxClicked}
-              />
-            ))}
-        </Row>
-      </AnimatePresence>
+      <Wrapper>
+        <StyledTitle onClick={() => increaseIndex(data!, setIndex)}>
+          {title}
+        </StyledTitle>
+        <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
+          <Row
+            variants={rowVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            transition={{ type: "tween", duration: 1 }}
+            key={index}
+          >
+            {data?.results
+              .slice(1)
+              .slice(offset * index, offset * index + offset)
+              .map((movie) => (
+                <ResultBox
+                  key={movie.id}
+                  data={movie}
+                  onBoxClicked={onBoxClicked}
+                />
+              ))}
+          </Row>
+        </AnimatePresence>
+      </Wrapper>
     </Slider>
   );
 };
