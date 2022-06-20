@@ -13,12 +13,12 @@ import { useState } from "react";
 import Sliders from "../components/Sliders";
 import MovieModal from "../components/MovieModal";
 import StyledTitle from "../components/common/styled/StyledTitle";
+import Banner from "../components/Banner";
+import Loader from "../components/common/styled/Loader";
 
 function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [movieId, setMovieId] = useState<number | null>(null);
-  const { data: latestMovie, isLoading: latestMoviesLoading } =
-    useQuery<IMovie>(["movies", "latestMovie"], getLatestMovies);
 
   const { data: nowPlayingMovies, isLoading: nowPlayingLoading } =
     useQuery<IGetMoviesResult>(["movies", "nowPlaying"], getMovies);
@@ -41,18 +41,11 @@ function Home() {
 
   return (
     <Wrapper>
-      {nowPlayingLoading ||
-      latestMoviesLoading ||
-      topRatedMoviesLoading ||
-      upcomingMoviesLoading ? (
+      {nowPlayingLoading || topRatedMoviesLoading || upcomingMoviesLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Banner $bgPhoto={makeImagePath(latestMovie?.backdrop_path || "")}>
-            <StyledTitle>Latest Movie</StyledTitle>
-            <Title>{latestMovie?.title}</Title>
-            <Overview>{latestMovie?.overview}</Overview>
-          </Banner>
+          <Banner />
           {movieSlides.map((movie) => (
             <Sliders
               title={movie.title}
@@ -71,34 +64,6 @@ function Home() {
 const Wrapper = styled.div`
   background: black;
   padding-bottom: 200px;
-`;
-
-const Loader = styled.div`
-  height: 20vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Banner = styled.div<{ $bgPhoto: string }>`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 60px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
-    url(${(props) => props.$bgPhoto});
-  background-size: cover;
-`;
-
-const Title = styled.h2`
-  font-size: 68px;
-  margin-bottom: 20px; ;
-`;
-
-const Overview = styled.p`
-  font-size: 30px;
-  width: 50%;
 `;
 
 export default Home;

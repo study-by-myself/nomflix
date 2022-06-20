@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router-dom";
