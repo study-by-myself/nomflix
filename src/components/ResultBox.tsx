@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { IMovie } from "../api";
+import { IResult } from "../api";
 import { makeImagePath } from "../utils";
 
-interface IMovieBoxProps {
-  movie: IMovie;
+interface IResultBoxProps {
+  movie: IResult;
   onBoxClicked: (id: number) => void;
 }
 
-const MovieBox = ({ movie, onBoxClicked }: IMovieBoxProps) => {
+const ResultBox = ({ movie, onBoxClicked }: IResultBoxProps) => {
   return (
     <Box
       layoutId={movie.id + ""}
@@ -82,4 +82,4 @@ const Info = styled(motion.div)`
   }
 `;
 
-export default MovieBox;
+export default ResultBox;

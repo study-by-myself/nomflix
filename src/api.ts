@@ -1,37 +1,9 @@
 const API_KEY = "10923b261ba94d897ac6b81148314a3f";
 const BASE_PATH = "https://api.themoviedb.org/3";
 
-export interface IMovie {
-  id: number;
-  title: string;
-  poster_path: string;
-  backdrop_path: string;
-  overview: string;
-}
-
-export interface IGetMoviesResult {
-  dates: {
-    maximum: string;
-    minimum: string;
-  };
-  page: number;
-  results: IMovie[];
-  total_pages: number;
-  total_results: number;
-}
-
-export interface IGetTVResult {
-  page: number;
-  results: ITV[];
-  total_pages: number;
-  total_results: number;
-}
-
-export interface ITV {
+export interface IResult {
   id: number;
   first_air_date: string;
-  genre_ids: number[];
-  name: string;
   original_name: string;
   overview: string;
   popularity: number;
@@ -39,6 +11,25 @@ export interface ITV {
   vote_average: number;
   vote_count: number;
   original_language: string;
+  backdrop_path: string | null;
+  title: string;
+}
+export interface IGetMoviesResult {
+  dates: {
+    maximum: string;
+    minimum: string;
+  };
+  page: number;
+  results: IResult[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface IGetTVResult {
+  page: number;
+  results: IResult[];
+  total_pages: number;
+  total_results: number;
 }
 
 export interface ISearch {
@@ -94,8 +85,26 @@ export function getMoviesBySearch(keyword: string | undefined) {
   ).then((response) => response.json());
 }
 
-export function getTvs() {
-  return fetch(`${BASE_PATH}/tv/on_the_air?api_key=${API_KEY}`).then(
+export function getAiringToday() {
+  return fetch(`${BASE_PATH}/tv/airing_today?api_key=${API_KEY}`).then(
+    (response) => response.json()
+  );
+}
+
+export function getLatestTV() {
+  return fetch(`${BASE_PATH}/tv/latest?api_key=${API_KEY}`).then((response) =>
+    response.json()
+  );
+}
+
+export function getPopularTV() {
+  return fetch(`${BASE_PATH}/tv/popular?api_key=${API_KEY}`).then((response) =>
+    response.json()
+  );
+}
+
+export function getTopRatedTV() {
+  return fetch(`${BASE_PATH}/tv/top_rated?api_key=${API_KEY}`).then(
     (response) => response.json()
   );
 }

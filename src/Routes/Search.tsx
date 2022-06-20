@@ -6,10 +6,10 @@ import {
   getMovieDetail,
   getMoviesBySearch,
   IGetMoviesResult,
-  IMovie,
+  IResult,
 } from "../api";
 import { Row } from "../components/common/styled/Row";
-import MovieBox from "../components/MovieBox";
+import ResultBox from "../components/ResultBox";
 import MovieModal from "../components/MovieModal";
 
 function Search() {
@@ -21,7 +21,7 @@ function Search() {
     ["movies", "keyword"],
     () => getMoviesBySearch(keyword!)
   );
-  const { data: movieData } = useQuery<IMovie>(
+  const { data: movieData } = useQuery<IResult>(
     ["movies", "MovieDetail"],
     () => getMovieDetail(movieId),
     { enabled: !!movieId }
@@ -38,7 +38,7 @@ function Search() {
       <Row>
         {searchResult &&
           searchResult.results.map((d) => (
-            <MovieBox key={d.id} movie={d} onBoxClicked={onClick} />
+            <ResultBox key={d.id} movie={d} onBoxClicked={onClick} />
           ))}
         {isOpen && (
           <MovieModal

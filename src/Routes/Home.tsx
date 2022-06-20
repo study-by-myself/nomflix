@@ -1,24 +1,24 @@
 import { useQuery } from "react-query";
-import styled from "styled-components";
 import {
   getLatestMovies,
   getMovies,
   getTopRatedMovies,
   getUpcomingMovies,
   IGetMoviesResult,
-  IMovie,
+  IResult,
 } from "../api";
-import { makeImagePath } from "../utils";
 import { useState } from "react";
 import Sliders from "../components/Sliders";
 import MovieModal from "../components/MovieModal";
-import StyledTitle from "../components/common/styled/StyledTitle";
 import Banner from "../components/Banner";
 import Loader from "../components/common/styled/Loader";
+import { Wrapper } from "../components/common/styled/Wrapper";
 
 function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [movieId, setMovieId] = useState<number | null>(null);
+  const { data: latestMovie, isLoading: latestMoviesLoading } =
+    useQuery<IResult>(["movies", "latestMovie"], getLatestMovies);
 
   const { data: nowPlayingMovies, isLoading: nowPlayingLoading } =
     useQuery<IGetMoviesResult>(["movies", "nowPlaying"], getMovies);
@@ -41,11 +41,14 @@ function Home() {
 
   return (
     <Wrapper>
-      {nowPlayingLoading || topRatedMoviesLoading || upcomingMoviesLoading ? (
+      {nowPlayingLoading ||
+      topRatedMoviesLoading ||
+      upcomingMoviesLoading ||
+      latestMoviesLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Banner />
+          <Banner data={latestMovie!} />
           {movieSlides.map((movie) => (
             <Sliders
               title={movie.title}
@@ -60,10 +63,5 @@ function Home() {
     </Wrapper>
   );
 }
-
-const Wrapper = styled.div`
-  background: black;
-  padding-bottom: 200px;
-`;
 
 export default Home;

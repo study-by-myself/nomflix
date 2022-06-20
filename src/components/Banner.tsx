@@ -1,27 +1,19 @@
-import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getLatestMovies, IMovie } from "../api";
+import { IResult } from "../api";
 import { makeImagePath } from "../utils";
-import Loader from "./common/styled/Loader";
 import StyledTitle from "./common/styled/StyledTitle";
 
-const Banner = () => {
-  const { data: latestMovie, isLoading: latestMoviesLoading } =
-    useQuery<IMovie>(["movies", "latestMovie"], getLatestMovies);
+interface IBannerProps {
+  data?: IResult;
+}
+
+const Banner = ({ data }: IBannerProps) => {
   return (
-    <>
-      {latestMoviesLoading ? (
-        <Loader>Loading...</Loader>
-      ) : (
-        <BannerWrapper
-          $bgPhoto={makeImagePath(latestMovie?.backdrop_path || "")}
-        >
-          <StyledTitle>Latest Movie</StyledTitle>
-          <Title>{latestMovie?.title}</Title>
-          <Overview>{latestMovie?.overview}</Overview>
-        </BannerWrapper>
-      )}
-    </>
+    <BannerWrapper $bgPhoto={makeImagePath(data?.backdrop_path || "")}>
+      <StyledTitle>Latest Movie</StyledTitle>
+      <Title>{data?.title}</Title>
+      <Overview>{data?.overview}</Overview>
+    </BannerWrapper>
   );
 };
 

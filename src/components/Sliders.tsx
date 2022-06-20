@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { AnimatePresence } from "framer-motion";
 import { IGetMoviesResult } from "../api";
-import MovieBox from "./MovieBox";
+import ResultBox from "./ResultBox";
 import { Row } from "./common/styled/Row";
 import StyledTitle from "./common/styled/StyledTitle";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -75,7 +75,7 @@ const Sliders = ({ title, data, openModal, setMovieId }: ISliderProps) => {
             .slice(1)
             .slice(offset * index, offset * index + offset)
             .map((movie) => (
-              <MovieBox
+              <ResultBox
                 key={movie.id}
                 movie={movie}
                 onBoxClicked={onBoxClicked}

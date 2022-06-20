@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getMovieDetail, IMovie } from "../api";
+import { getMovieDetail, IResult } from "../api";
 import { makeImagePath } from "../utils";
 
 const Overlay = styled(motion.div)`
@@ -53,13 +53,13 @@ const BigError = styled.h1`
   font-size: 46px;
 `;
 
-interface IMovieModalProps {
+interface IResultModalProps {
   movieId: number | null;
   closeModal: () => void;
 }
 
-const MovieModal = ({ movieId, closeModal }: IMovieModalProps) => {
-  const { data: clickedMovie } = useQuery<IMovie>(["movies", movieId], () =>
+const MovieModal = ({ movieId, closeModal }: IResultModalProps) => {
+  const { data: clickedMovie } = useQuery<IResult>(["movies", movieId], () =>
     getMovieDetail(movieId)
   );
 
