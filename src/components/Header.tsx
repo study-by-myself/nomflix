@@ -104,10 +104,10 @@ const logoVariants = {
 
 const navVariants = {
   top: {
-    backgroundColor: "rgba(0, 0, 0, 1)",
+    backgroundColor: "rgba(0, 0, 0, 0)",
   },
   scroll: {
-    backgroundColor: "rgba(42, 42, 42, 0.9)",
+    backgroundColor: "rgba(0, 0, 0, 1)",
   },
 };
 
