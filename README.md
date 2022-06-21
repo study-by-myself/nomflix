@@ -30,3 +30,4 @@
 - React-router-dom v6
 - react-query
 - framer-motion
+- styled-component
