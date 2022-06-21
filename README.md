@@ -8,8 +8,10 @@
   netflix clone app using react!
 
 
-## [Page 👉 👉 👉](https://study-by-myself.github.io/nomflix/)
-
+### [👉 👉 Page 👉 👉](https://study-by-myself.github.io/nomflix/)
+### [💕 Blog 💕](https://pro-yomi.tistory.com/76)
+  
+  
 </div>
   
 ## How to run
