@@ -33,3 +33,8 @@
 - react-query
 - framer-motion
 - styled-component
+
+
+## API doc
+- [The movie db api](https://developers.themoviedb.org/3)
+- [The movie db](https://www.themoviedb.org/)
