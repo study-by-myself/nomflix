@@ -11,7 +11,6 @@ const SearchResults = ({ searchData, setIsOpen }: ISearchResultsProps) => {
   const [id, setId] = useState<number | null>(null);
 
   const onClick = (id: number) => {
-    console.log(id);
     setId(id);
     setIsOpen(true);
   };

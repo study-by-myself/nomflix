@@ -1,8 +1,60 @@
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
-import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getMovieDetail, IResult } from "../api";
+import { IResult } from "../api";
 import { makeImagePath } from "../utils";
+
+interface IResultModalProps {
+  clickedItem?: IResult;
+  closeModal: () => void;
+  movieId?: number | null;
+}
+
+const ClickedModal = ({
+  clickedItem,
+  closeModal,
+  movieId,
+}: IResultModalProps) => {
+  const { scrollY } = useViewportScroll();
+
+  return (
+    <AnimatePresence>
+      {clickedItem ? (
+        <>
+          <Overlay
+            onClick={closeModal}
+            exit={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          />
+          <BigMovie
+            style={{ top: scrollY.get() + 100 }}
+            layoutId={movieId?.toString() || clickedItem.id.toString()}
+          >
+            {clickedItem ? (
+              <>
+                <BigCover
+                  style={{
+                    backgroundImage: `linear-gradient(to top, black, transparent), url(${makeImagePath(
+                      clickedItem.backdrop_path,
+                      "w500"
+                    )})`,
+                  }}
+                />
+                <BigTitle>
+                  {clickedItem.title || clickedItem.name || "No Title"}
+                </BigTitle>
+                <BigOverview>
+                  {clickedItem.overview || "There is No Overview"}
+                </BigOverview>
+              </>
+            ) : (
+              <BigError>Opps! There is no data . . .</BigError>
+            )}
+          </BigMovie>
+        </>
+      ) : null}
+    </AnimatePresence>
+  );
+};
 
 const Overlay = styled(motion.div)`
   position: fixed;
@@ -52,61 +104,5 @@ const BigError = styled.h1`
   text-align: center;
   font-size: 46px;
 `;
-
-interface IResultModalProps {
-  clickedItem?: IResult;
-  closeModal: () => void;
-  movieId?: number | null;
-}
-
-const ClickedModal = ({
-  clickedItem,
-  closeModal,
-  movieId,
-}: IResultModalProps) => {
-  const { scrollY } = useViewportScroll();
-
-  console.log(clickedItem?.id.toString());
-  console.log(clickedItem?.title);
-
-  return (
-    <AnimatePresence>
-      {clickedItem ? (
-        <>
-          <Overlay
-            onClick={closeModal}
-            exit={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          />
-          <BigMovie
-            style={{ top: scrollY.get() + 100 }}
-            layoutId={movieId?.toString() || clickedItem.id.toString()}
-          >
-            {clickedItem ? (
-              <>
-                <BigCover
-                  style={{
-                    backgroundImage: `linear-gradient(to top, black, transparent), url(${makeImagePath(
-                      clickedItem.backdrop_path,
-                      "w500"
-                    )})`,
-                  }}
-                />
-                <BigTitle>
-                  {clickedItem.title || clickedItem.name || "No Title"}
-                </BigTitle>
-                <BigOverview>
-                  {clickedItem.overview || "There is No Overview"}
-                </BigOverview>
-              </>
-            ) : (
-              <BigError>Opps! There is no data . . .</BigError>
-            )}
-          </BigMovie>
-        </>
-      ) : null}
-    </AnimatePresence>
-  );
-};
 
 export default ClickedModal;

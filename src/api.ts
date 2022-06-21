@@ -68,7 +68,6 @@ export function getUpcomingMovies() {
 }
 
 export function getMovieDetail(movie_id: number | null) {
-  console.log(movie_id);
   return fetch(`${BASE_PATH}/movie/${movie_id}?api_key=${API_KEY}`).then(
     (response) => response.json()
   );
