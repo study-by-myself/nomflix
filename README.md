@@ -34,6 +34,43 @@
 - framer-motion
 - styled-component
 
+## Directory Structure
+```Typescript
+📦 src
+ ┣ 📂 Routes
+ ┃ ┣ 📜 Home.tsx
+ ┃ ┣ 📜 Search.tsx
+ ┃ ┣ 📜 Tv.tsx
+ ┃ ┗ 📜 index.tsx
+ ┣ 📂 components
+ ┃ ┣ 📂 common
+ ┃ ┃ ┗ 📂 styled
+ ┃ ┃ ┃ ┣ 📜 Loader.tsx
+ ┃ ┃ ┃ ┣ 📜 Row.tsx
+ ┃ ┃ ┃ ┣ 📜 StyledTitle.tsx
+ ┃ ┃ ┃ ┗ 📜 Wrapper.tsx
+ ┃ ┣ 📜 Banner.tsx
+ ┃ ┣ 📜 ClickedModal.tsx
+ ┃ ┣ 📜 ClickedSearchModal.tsx
+ ┃ ┣ 📜 Header.tsx
+ ┃ ┣ 📜 ResultBox.tsx
+ ┃ ┣ 📜 SearchResults.tsx
+ ┃ ┗ 📜 Sliders.tsx
+ ┣ 📜 App.css
+ ┣ 📜 App.test.tsx
+ ┣ 📜 App.tsx
+ ┣ 📜 GlobalStyle.tsx
+ ┣ 📜 api.ts
+ ┣ 📜 index.css
+ ┣ 📜 index.tsx
+ ┣ 📜 logo.svg
+ ┣ 📜 react-app-env.d.ts
+ ┣ 📜 reportWebVitals.ts
+ ┣ 📜 setupTests.ts
+ ┣ 📜 styled.d.ts
+ ┣ 📜 theme.ts
+ ┗ 📜 utils.ts
+ ```
 
 ## API doc
 - [The movie db api](https://developers.themoviedb.org/3)
